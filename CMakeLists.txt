@@ -5,22 +5,22 @@ cmake_minimum_required(VERSION 2.8.8 FATAL_ERROR)
 macro(add_cflags)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ARGN}")
 endmacro(add_cflags)
-  
+
 add_definitions(-DMALLOC_DEBUG_ENABLE)
 add_definitions(-D_GNU_SOURCE)
 add_definitions(-DLDSO_SONAME=\"ldso\")
 
 if(LOADER_VALGRIND STREQUAL ON)
-  add_definitions(-DHAVE_VALGRIND_H)
-  include_directories("/usr/include/")
+    add_definitions(-DHAVE_VALGRIND_H)
+    include_directories("/usr/include/")
 else()
-  add_cflags(-O3)
+    add_cflags(-O3)
 endif()
 
 add_cflags(-g3)
 # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=56888
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU")
-  add_cflags(-fno-tree-loop-distribute-patterns)
+    add_cflags(-fno-tree-loop-distribute-patterns)
 endif()
 add_cflags(-Wall)
 add_cflags(-Wextra)
@@ -31,6 +31,7 @@ add_cflags(-MD)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/x86_64)
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 
 message(STATUS "System version: ${CMAKE_SYSTEM_VERSION}")

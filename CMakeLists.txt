@@ -1,5 +1,11 @@
 project(elf-loader C CXX ASM)
 
+cmake_minimum_required(VERSION 2.8.8 FATAL_ERROR)
+
+macro(add_cflags)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ARGN}")
+endmacro(add_cflags)
+  
 add_definitions(-DMALLOC_DEBUG_ENABLE)
 add_definitions(-D_GNU_SOURCE)
 add_definitions(-DLDSO_SONAME=\"ldso\")

@@ -52,8 +52,11 @@ target_link_libraries(s t)
 # forced circular dependency
 target_link_libraries(n -ldl)
 target_link_libraries(o -ldl n)
-file(COPY libn.c DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(RENAME ${CMAKE_CURRENT_BINARY_DIR}/libn.c ${CMAKE_CURRENT_BINARY_DIR}/libnn.c)
+# cmake apparently has no means of copying in place
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/libndir)
+file(COPY libn.c DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/libndir)
+file(RENAME ${CMAKE_CURRENT_BINARY_DIR}/libndir/libn.c ${CMAKE_CURRENT_BINARY_DIR}/libnn.c)
+file(REMOVE_RECURSE ${CMAKE_CURRENT_BINARY_DIR}/libndir)
 add_library(nn SHARED ${CMAKE_CURRENT_BINARY_DIR}/libnn.c)
 target_link_libraries(nn -ldl o)
 

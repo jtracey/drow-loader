@@ -143,31 +143,7 @@ __tls_get_addr (struct tls_index *ti)
   return retval;
 }
 
-// It's hard to believe but _dl_get_tls_static_info as well as other functions
-// were defined with a non-standard calling convention as an optimization. Since
-// these functions are called by the outside world, we have to do precisely
-// the same to be compatible.
-#if defined (__i386__)
-#define internal_function   __attribute ((regparm (3), stdcall))
-// this is the prototype for the GNU version of the i386 TLS ABI
-// note the extra leading underscore used here to identify this optimized
-// version of _get_addr
-EXPORT void *
-__attribute__ ((__regparm__ (1))) ___tls_get_addr (struct tls_index *ti)
-{
-  void *retval =
-    (void *) vdl_tls_get_addr_fast (ti->ti_module, ti->ti_offset);
-  if (retval == 0)
-    {
-      retval = (void *) vdl_tls_get_addr_slow (ti->ti_module, ti->ti_offset);
-    }
-  return retval;
-}
-#else
-#define internal_function
-#endif
-
-EXPORT void internal_function
+EXPORT void
 _dl_get_tls_static_info (size_t *sizep, size_t *alignp)
 {
   // This method is called from __pthread_initialize_minimal_internal (nptl/init.c)
@@ -187,7 +163,7 @@ _dl_get_tls_static_info (size_t *sizep, size_t *alignp)
 // This function is called from within pthread_create to initialize
 // the content of the dtv for a new thread before giving control to
 // that new thread
-EXPORT void *internal_function
+EXPORT void *
 _dl_allocate_tls_init (void *tcb)
 {
   if (tcb == 0)
@@ -204,7 +180,7 @@ _dl_allocate_tls_init (void *tcb)
 // memory for the dtv of the thread. Optionally, the caller
 // also is able to delegate memory allocation of the tcb
 // to this function
-EXPORT void *internal_function
+EXPORT void *
 _dl_allocate_tls (void *mem)
 {
   read_lock (g_vdl.tls_lock);
@@ -221,7 +197,7 @@ _dl_allocate_tls (void *mem)
   return (void *) tcb;
 }
 
-EXPORT void internal_function
+EXPORT void
 _dl_deallocate_tls (void *ptcb, bool dealloc_tcb)
 {
   unsigned long tcb = (unsigned long) ptcb;
@@ -234,13 +210,13 @@ _dl_deallocate_tls (void *ptcb, bool dealloc_tcb)
     }
 }
 
-EXPORT int internal_function
+EXPORT int
 _dl_make_stack_executable (__attribute__((unused)) void **stack_endp)
 {
   return 0;
 }
 
-EXPORT struct VdlFile *internal_function
+EXPORT struct VdlFile *
 _dl_find_dso_for_object (const ElfW(Addr) addr)
 {
   return vdl_addr_to_file (addr);
@@ -284,7 +260,7 @@ dlsym_hack (void *handle, const char *symbol)
 
 // Typically called by malloc to lookup ptmalloc_init.
 // In this case, symbolp is 0.
-int internal_function
+int
 _dl_addr_hack (const void *address, Dl_info *info,
                void **mapp, __attribute__((unused)) const ElfW(Sym) **symbolp)
 {

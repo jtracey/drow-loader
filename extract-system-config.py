@@ -161,15 +161,12 @@ def search_debug_file():
                     # ubuntu 09.10-10.10
                     ('/usr/lib/debug/lib/', r'ld-[0-9.]+\.so'),
                     # ubuntu 11.04/11.10
-                    ('/usr/lib/debug/lib/i386-linux-gnu/', r'ld-[0-9.]+\.so'),
                     ('/usr/lib/debug/lib/x86_64-linux-gnu/', r'ld-[0-9.]+\.so'),
                     # ubuntu >12.04
                     ('/usr/lib/debug/lib/x86_64-linux-gnu/', r'ld-[0-9.]+\.so'),
-                    ('/usr/lib/debug/lib/i386-linux-gnu/', r'ld-[0-9.]+\.so'),
                   ]
     build_ids = [ # debian
                   ('/lib/x86_64-linux-gnu/', r'ld-[0-9.]+\.so'),
-                  ('/lib/i386-linux-gnu/', r'ld-[0-9.]+\.so'),
                   # solus
                   ('/usr/lib/', r'ld-linux-x86-64\.so\.2'),
                 ]

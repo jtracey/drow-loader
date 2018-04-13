@@ -6,7 +6,7 @@
 
 This is an ELF dynamic linker/loader. Its purpose is
 to be a binary-compatible replacement of /lib/ld-linux.so.2
-on a large variety of linux distributions for i386/x86-64
+on a large variety of linux distributions for x86-64
 systems. Support for other hardware platforms is not planned
 but non-intrusive patches are welcome :)
 
@@ -16,8 +16,8 @@ but non-intrusive patches are welcome :)
 I need more features from the dynamic loader than what is
 provided by the default glibc loader. I could have tried to
 hack the glibc loader but since I did not know enough about
-the details of how a loader work, and given the horrid 
-complexity/lack of documentation of the glibc loader, it 
+the details of how a loader work, and given the horrid
+complexity/lack of documentation of the glibc loader, it
 seemed easier to implement a new loader with the features I
 needed.
 
@@ -53,11 +53,11 @@ try to make it work.
 --------------------
 
 Obviously, you need to build it first. To do this, you need
-some standard devel packages. 
+some standard devel packages.
 On fedora: yum install gcc gcc-c++ make mercurial glibc-debuginfo
 On ubuntu: apt-get install gcc g++ make mercurial libc6-dbg
 
-If you have selinux enabled, you will most likely have to run a 
+If you have selinux enabled, you will most likely have to run a
 command such as this:
 chcon -t textrel_shlib_t '/lib/libc-2.10.2.so'
 
@@ -66,7 +66,7 @@ make vdl-config.h
 make
 make test
 
-If everything is allright, you should see a set of PASS 
+If everything is allright, you should see a set of PASS
 statements and you should be able to start using this loader
 by:
   a. elfedit your-binary /path/to/ldso ; echo $?

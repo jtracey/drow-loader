@@ -61,25 +61,7 @@ if( ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "x86_64" )
     message(STATUS "LIBDL = ${LIBDL_FILE}")
 
 else()
-    set(as_srcs
-        i386/stage0.S
-        i386/machine.c
-        i386/resolv.S
-    )
-
-    set(LDSO_FILE /lib/ld-linux.so.2)
-    message(STATUS "LDSO = ${LDSO_FILE}")
-
-    if(EXISTS /lib/i386-linux-gnu/libdl.so.2)
-        set(LIBDL_FILE /lib/i386-linux-gnu/libdl.so.2)
-    elseif(EXISTS /lib/libdl.so.2)
-        set(LIBDL_FILE /lib/libdl.so.2)
-    endif()
-    message(STATUS "LIBDL = ${LIBDL_FILE}")
-
-    set(CMAKE_ASM_FLAGS "${CMAKE_ASM_FLAGS} --32 -march=i386")
-    add_cflags(-m32)
-    set(CMAKE_LINK_FLAGS "${CMAKE_LINK_FLAGS} -m32")
+    message( FATAL_ERROR "drow-loader no longer supports anything but x86_64" )
 endif()
 
 set(ldso_srcs

@@ -179,8 +179,7 @@ machine_lazy_reloc (struct VdlFile *file)
     }
   VDL_LOG_ASSERT (dt_pltrel == DT_RELA, "x86-64 uses rela entries");
   // setup lazy binding by setting the GOT entries 2 and 3
-  // as specified by the ELF x86_64 ABI. It's the same
-  // as the i386 ABI here.
+  // as specified by the ELF x86_64 ABI.
   // Entry 2 is set to a pointer to the associated VdlFile
   // Entry 3 is set to the asm trampoline machine_resolve_trampoline
   //

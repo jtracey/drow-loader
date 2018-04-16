@@ -71,7 +71,7 @@ class DebugData:
         item = self.read_one ()
         while item is not None:
             if item.type.strip() == type and \
-                    item.attributes.has_key ('DW_AT_name') and \
+                    'DW_AT_name' in item.attributes and \
                     item.attributes['DW_AT_name'].strip() == name:
                 return item
             item = self.read_one ()
@@ -90,7 +90,7 @@ class DebugData:
                 self.write_back_one (sub_item)
                 return None
             if sub_item.type.strip() == 'DW_TAG_member' and \
-                    sub_item.attributes.has_key ('DW_AT_name') and \
+                    'DW_AT_name' in sub_item.attributes and \
                     sub_item.attributes['DW_AT_name'].strip() == member_name:
                 return Data (sub_item.attributes['DW_AT_data_member_location'].strip())
             sub_item = self.read_one ()
@@ -107,7 +107,7 @@ class DebugData:
         item = self.find_struct (struct_type_name)
         if item is None:
             return None
-        if not item.attributes.has_key ('DW_AT_byte_size'):
+        if 'DW_AT_byte_size' not in item.attributes:
             return None
         return Data (item.attributes['DW_AT_byte_size'].strip())
     def get_typedef_member_offset (self, typename, member):
@@ -115,7 +115,7 @@ class DebugData:
         item = self.find_by_name ('DW_TAG_typedef', typename)
         if item is None:
             return None
-        if not item.attributes.has_key ('DW_AT_type'):
+        if 'DW_AT_type' not in item.attributes:
             return None
         ref = item.attributes['DW_AT_type'].strip()
         self.rewind ()
@@ -203,7 +203,7 @@ def list_lib_path():
     return ':'.join(paths)
 
 def usage():
-    print ''
+    print('')
 
 def main(argv):
     config_filename = ''

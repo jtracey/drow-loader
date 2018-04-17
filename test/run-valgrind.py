@@ -12,7 +12,7 @@ except e:
 
 ver_re = re.compile('([0-9]+)\.([0-9]+)\.([0-9]+)')
 for l in version.stdout.readlines():
-    m = ver_re.search (l)
+    m = ver_re.search (l.decode('utf-8'))
     if m is None:
         continue
     ver = int(m.group(1)) * 100 + int(m.group(2)) * 10 + int(m.group(3))
